@@ -23,12 +23,16 @@ import { purple, white } from '../utils/colors';
 
 function SubmitBtn({ onPress }) {
   return (
-    <TouchableOpacity onPress={onPress}>
+    <TouchableOpacity
+      style={
+        Platform.OS === 'ios' ? styles.iosSubmitBtn : styles.AndroidSubmitBtn
+      }
+      onPress={onPress}
+    >
       <Text style={styles.submitBtnText}>SUBMIT</Text>
     </TouchableOpacity>
   );
 }
-
 class AddEntry extends Component {
   state = {
     run: 0,
