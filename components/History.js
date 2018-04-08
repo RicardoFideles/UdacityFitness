@@ -44,8 +44,12 @@ class History extends Component {
           <Text style={styles.noDataText}>{today}</Text>
         </View>
       ) : (
-        <TouchableOpacity onPress={() => console.log('Pressed')}>
-          <MetricCard metrics={metrics} date={formattedDate} />
+        <TouchableOpacity
+          onPress={() =>
+            this.props.navigation.navigate('EntryDetail', { entryId: key })
+          }
+        >
+          <MetricCard date={formattedDate} metrics={metrics} />
         </TouchableOpacity>
       )}
     </View>
@@ -55,7 +59,7 @@ class History extends Component {
       <View style={styles.item}>
         <DateHeader date={formattedDate} />
         <Text style={styles.noDataText}>
-          You didn't log any data on this day
+          You didn't log any data on this day.
         </Text>
       </View>
     );
@@ -63,11 +67,9 @@ class History extends Component {
   render() {
     const { entries } = this.props;
     const { ready } = this.state;
-
     if (ready === false) {
       return <AppLoading />;
     }
-
     return (
       <UdaciFitnessCalendar
         items={entries}
@@ -77,10 +79,9 @@ class History extends Component {
     );
   }
 }
-
 const styles = StyleSheet.create({
   item: {
-    background: white,
+    backgroundColor: white,
     borderRadius: Platform.OS === 'ios' ? 16 : 2,
     padding: 20,
     marginLeft: 10,
@@ -89,7 +90,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     shadowRadius: 3,
     shadowOpacity: 0.8,
-    shadowColor: 'rgba(0,0,0,0,24)',
+    shadowColor: 'rgba(0, 0, 0, 0.24)',
     shadowOffset: {
       width: 0,
       height: 3,
@@ -101,11 +102,9 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
   },
 });
-
 function mapStateToProps(entries) {
   return {
     entries,
   };
 }
-
 export default connect(mapStateToProps)(History);
